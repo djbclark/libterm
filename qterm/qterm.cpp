@@ -90,7 +90,7 @@ void QTerm::init()
     if( QApplication::desktop()->screenGeometry().width() < 1000 ) {
         font->setPointSize(6);
     } else {
-        font->setPointSize(12);
+        font->setPointSize(4);
     }
 
     // Workaround for a bug in OSX - Dave reports that maxWidth returns 0,
@@ -136,6 +136,7 @@ void QTerm::resize_term()
 
 void QTerm::term_bell(term_t handle)
 {
+#if 0
 #ifdef __QNX__
     char command[] = "msg::play_sound\ndat:json:{\"sound\":\"notification_general\"}";
     int f = open("/pps/services/multimedia/sound/control", O_RDWR);
@@ -143,6 +144,7 @@ void QTerm::term_bell(term_t handle)
     ::close(f);
 #else
     QApplication::beep();
+#endif
 #endif
 }
 
@@ -494,10 +496,12 @@ void QTerm::paintEvent(QPaintEvent *event)
 
 void QTerm::keyPressEvent(QKeyEvent *event)
 {
+    static bool upperCase = false;
     switch(event->key()) {
         // FIXME These first four are workarounds for bugs in QT. Remove once it is fixed
         case Qt::Key_CapsLock:
         case Qt::Key_Shift:
+            upperCase = !upperCase;
             break;
         case Qt::Key_Return:
             term_send_data( terminal, "\n", 1 );
@@ -521,7 +525,14 @@ void QTerm::keyPressEvent(QKeyEvent *event)
             term_send_special( terminal, TERM_KEY_LEFT );
             break;
         default:
+            if( upperCase )
+            {
+            term_send_data( terminal, event->text().toUtf8().toUpper().constData(), event->text().count() );
+            }
+            else
+            {
             term_send_data( terminal, event->text().toUtf8().constData(), event->text().count() );
+            }
             break;
     }
 }

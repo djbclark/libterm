@@ -3,7 +3,7 @@
     <id>org.dyndns.smeagle.qterm</id>
     <filename>qterm</filename>
     <name>Command shell</name>
-    <versionNumber>1.0.2</versionNumber>
+    <versionNumber>1.0.42</versionNumber>
     <description>BB10 terminal</description>
     <initialWindow>
         <systemChrome>none</systemChrome>
@@ -11,8 +11,8 @@
         <autoOrients>true</autoOrients>
         <aspectRatio>landscape</aspectRatio>
     </initialWindow>
-    <author>Aaron Small</author>
-    <authorId>gYAAgNWv6u7pboCe5pzDHD7DuQM</authorId>
+    <author>jsvader</author>
+    <authorId>gYAAgBOybyTlr-Rk2G2VcpWAOpk</authorId>
     <env var="QML_IMPORT_PATH" value="app/native/imports"/>
     <env var="QT_PLUGIN_PATH" value="app/native/plugins:/usr/lib/qt4/plugins"/>
     <env var="LD_LIBRARY_PATH" value="app/native/lib:/usr/lib/qt4/lib/"/>
